@@ -12,12 +12,14 @@ import (
 )
 
 type DaySteps struct {
+// TODO: реализовать функцию
 	Steps    int
 	Duration time.Duration
 	personaldata.Personal
 }
 
 func (ds *DaySteps) Parse(datastring string) error {
+// TODO: реализовать функцию
 	parts := strings.Split(datastring, ",")
 	if len(parts) != 2 {
 		return errors.New("invalid data format")

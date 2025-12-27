@@ -6,13 +6,14 @@ import (
 )
 
 const (
-	mInKm                      = 1000
-	minInH                     = 60
-	stepLengthCoefficient      = 0.45
-	walkingCaloriesCoefficient = 0.5
+	mInKm                      = 1000 // количество метров в километре.
+	minInH                     = 60 // количество метров в километре.
+	stepLengthCoefficient      = 0.45 // коэффициент для расчета длины шага на основе роста
+	walkingCaloriesCoefficient = 0.5 // коэффициент для расчета калорий при ходьбе
 )
 
 func Distance(steps int, height float64) float64 {
+// TODO: реализовать функцию
 	if steps <= 0 || height <= 0 {
 		return 0
 	}
@@ -21,6 +22,7 @@ func Distance(steps int, height float64) float64 {
 }
 
 func MeanSpeed(steps int, height float64, duration time.Duration) float64 {
+// TODO: реализовать функцию
 	if steps <= 0 || height <= 0 || duration <= 0 {
 		return 0
 	}
@@ -30,7 +32,8 @@ func MeanSpeed(steps int, height float64, duration time.Duration) float64 {
 }
 
 func RunningSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
-	if steps <= 0 || weight <= 0 || height <= 0 || duration <= 0 {
+// TODO: реализовать функцию	
+if steps <= 0 || weight <= 0 || height <= 0 || duration <= 0 {
 		return 0, errors.New("invalid input data")
 	}
 	speed := MeanSpeed(steps, height, duration)
@@ -39,7 +42,8 @@ func RunningSpentCalories(steps int, weight, height float64, duration time.Durat
 }
 
 func WalkingSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
-	if steps <= 0 || weight <= 0 || height <= 0 || duration <= 0 {
+// TODO: реализовать функцию	
+if steps <= 0 || weight <= 0 || height <= 0 || duration <= 0 {
 		return 0, errors.New("invalid input data")
 	}
 	speed := MeanSpeed(steps, height, duration)

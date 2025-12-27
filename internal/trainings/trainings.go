@@ -11,6 +11,7 @@ import (
 )
 
 type Training struct {
+// TODO: добавить поля
 	Steps        int
 	TrainingType string
 	Duration     time.Duration
@@ -18,7 +19,8 @@ type Training struct {
 }
 
 func (t *Training) Parse(datastring string) error {
-	parts := strings.Split(datastring, ",")
+// TODO: добавить поля	
+parts := strings.Split(datastring, ",")
 	if len(parts) != 3 {
 		return errors.New("invalid data format")
 	}
@@ -40,6 +42,7 @@ func (t *Training) Parse(datastring string) error {
 }
 
 func (t Training) ActionInfo() (string, error) {
+// TODO: добавить поля
 	dist := spentenergy.Distance(t.Steps, t.Height)
 	speed := spentenergy.MeanSpeed(t.Steps, t.Height, t.Duration)
 
