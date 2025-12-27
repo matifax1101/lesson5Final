@@ -26,13 +26,13 @@ func (ds *DaySteps) Parse(datastring string) error {
 	}
 
 	steps, err := strconv.Atoi(parts[0])
-	if err != nil {
-		return err
+	if err != nil || steps <= 0{
+		return errors.New("invalid step")
 	}
 
 	duration, err := time.ParseDuration(parts[1])
-	if err != nil {
-		return err
+	if err != nil || duration <= 0{
+		return errors.New("invalid duration")
 	}
 
 	ds.Steps = steps
@@ -41,8 +41,8 @@ func (ds *DaySteps) Parse(datastring string) error {
 }
 
 func (ds DaySteps) ActionInfo() (string, error) {
-	dist := spentenergy.Distance(ds.Steps, ds.Height)
-	cal, err := spentenergy.WalkingSpentCalories(ds.Steps, ds.Weight, ds.Height, ds.Duration)
+	distance := spentenergy.Distance(ds.Steps, ds.Height)
+	calories, err := spentenergy.WalkingSpentCalories(ds.Steps, ds.Weight, ds.Height, ds.Duration)
 	if err != nil {
 		return "", err
 	}
@@ -50,7 +50,7 @@ func (ds DaySteps) ActionInfo() (string, error) {
 	return fmt.Sprintf(
 		"Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.\n",
 		ds.Steps,
-		dist,
-		cal,
+		distance,
+		calories,
 	), nil
 }

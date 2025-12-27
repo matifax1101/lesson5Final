@@ -3,6 +3,7 @@ package trainings
 import (
 	"errors"
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 
@@ -11,7 +12,7 @@ import (
 )
 
 type Training struct {
-// TODO: добавить поля
+	// TODO: добавить поля
 	Steps        int
 	TrainingType string
 	Duration     time.Duration
@@ -19,20 +20,20 @@ type Training struct {
 }
 
 func (t *Training) Parse(datastring string) error {
-// TODO: добавить поля	
-parts := strings.Split(datastring, ",")
+	// TODO: добавить поля
+	parts := strings.Split(datastring, ",")
 	if len(parts) != 3 {
 		return errors.New("invalid data format")
 	}
 
 	steps, err := strconv.Atoi(parts[0])
-	if err != nil {
-		return err
+	if err != nil || steps <= 0 {
+		return errors.New("invalid steps")
 	}
 
 	duration, err := time.ParseDuration(parts[2])
-	if err != nil {
-		return err
+	if err != nil || duration <= 0 {
+		return errors.New("invalid duration")
 	}
 
 	t.Steps = steps
@@ -42,8 +43,8 @@ parts := strings.Split(datastring, ",")
 }
 
 func (t Training) ActionInfo() (string, error) {
-// TODO: добавить поля
-	dist := spentenergy.Distance(t.Steps, t.Height)
+	// TODO: добавить поля
+	distance := spentenergy.Distance(t.Steps, t.Height)
 	speed := spentenergy.MeanSpeed(t.Steps, t.Height, t.Duration)
 
 	var calories float64
@@ -51,9 +52,11 @@ func (t Training) ActionInfo() (string, error) {
 
 	switch t.TrainingType {
 	case "Бег":
-		calories, err = spentenergy.RunningSpentCalories(t.Steps, t.Weight, t.Height, t.Duration)
+		calories, err = spentenergy.RunningSpentCalories(
+			t.Steps, t.Weight, t.Height, t.Duration)
 	case "Ходьба":
-		calories, err = spentenergy.WalkingSpentCalories(t.Steps, t.Weight, t.Height, t.Duration)
+		calories, err = spentenergy.WalkingSpentCalories(
+			t.Steps, t.Weight, t.Height, t.Duration)
 	default:
 		return "", errors.New("неизвестный тип тренировки")
 	}
@@ -66,7 +69,7 @@ func (t Training) ActionInfo() (string, error) {
 		"Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n",
 		t.TrainingType,
 		t.Duration.Hours(),
-		dist,
+		distance,
 		speed,
 		calories,
 	), nil
